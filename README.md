@@ -5,4 +5,4 @@ Uebungen zur c++ Vorlesung [''Programmieren in C++'' im Sommersemester 2016](htt
 
 
 ## Vorlesungsnotizen
-* [1. Vorlesung](v1.md)
+* [1. Vorlesung](lectures/l1.md)
