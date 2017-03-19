@@ -2,3 +2,6 @@
 	path = googletest
 	url = https://github.com/google/googletest
         ignore = untracked
+[submodule "styleguide"]
+	path = styleguide
+	url = git@github.com:google/styleguide.git

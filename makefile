@@ -7,7 +7,7 @@
 GCCLIB=/usr/lib/
 
 #build the files the exercises need
-depend:	gtest
+depend:	gtest cpplint
 
 gtest: $(GCCLIB)/gtest.h $(GCCLIB)/libgtest_main.a $(GCCLIB)/libgtest.a
 
@@ -25,4 +25,12 @@ googletest/googletest/libgtest_main.a: googletest/googletest/libgtest.a
 googletest/googletest/include/gtest/gtest.h: googletest/googletest/libgtest.a
 
 googletest/googletest/CMakeLists.txt:
-	cd googletest; git pull
+	git submodule update --init googletest
+
+cpplint: cpplint.sty
+
+cpplint.py: styleguide/cpplint/cpplint.py
+	ln -s $< $@
+
+styleguide/cpplint/cpplint.py:
+	git submodule update --init styleguide
