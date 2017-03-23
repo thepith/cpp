@@ -8,7 +8,7 @@
 int main(int argc, char** argv) {
   // printf("Number of command line arguments: %d\n", argc);
   if (argc != 2) {
-    printf("Usage: ./Pentecost <Year>\n");
+    printf("Usage: ./PentecostMain <Year>\n");
     exit(1);
   }
   int year = atoi(argv[1]);
