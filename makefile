@@ -6,7 +6,7 @@
 #set libary path of gcc. Check with
 # gcc -print-search-dirs
 #which directories are used
-#gcc under cygwin uses usr/lib
+#gcc under cygwin uses usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/
 GCCLIB=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/
 
 ##DEPENDECIES
