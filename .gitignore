@@ -27,3 +27,6 @@
 *.exe
 *.out
 *.app
+
+# style checker
+cpplint.py
