@@ -30,3 +30,6 @@
 
 # style checker
 cpplint.py
+
+# vim files
+*.swp
