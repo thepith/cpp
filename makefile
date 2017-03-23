@@ -7,7 +7,7 @@
 # gcc -print-search-dirs
 #which directories are used
 #gcc under cygwin uses usr/lib
-GCCLIB=/usr/lib/
+GCCLIB=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/
 
 ##DEPENDECIES
 #build the files the exercises need
