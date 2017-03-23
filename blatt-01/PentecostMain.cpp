@@ -12,8 +12,8 @@ int main(int argc, char** argv) {
     exit(1);
   }
   int year = atoi(argv[1]);
-
   int date = DayOfPentecost(year);
-  printf("In the year %d Pentecost (Monday) will be %d days after the 30th of April.\n",
+  printf("In the year %d Pentecost (Monday) will be"
+  " %d days after the 30th of April.\n",
         year, date);
 }

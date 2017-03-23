@@ -12,9 +12,9 @@ int DayOfPentecost(int year) {
   int OG = 21 + D - R;
   int SZ = 7 - (year + year/4 + S)%7;
   int OE = 7 - (OG - SZ) % 7;
-  int OS = OG + OE; // easter in days in march
-  int Pentecost = OS + 50; // Pentacost (Monday) is 50 days after easter
-  int Pentecost_May = Pentecost - 61; // convert days in march to days in may
+  int OS = OG + OE;  // easter in days in march
+  int Pentecost = OS + 50;  // Pentacost (Monday) is 50 days after easter
+  int Pentecost_May = Pentecost - 61;  // convert days in march to days in may
   return Pentecost_May;
 }
 
