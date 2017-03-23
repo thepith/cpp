@@ -5,17 +5,18 @@ SRC := $(wildcard *.cpp)
 OUT := $(subst .cpp,.o,$(SRC))
 
 
-SRC_RUN := $(filter-out %Test.cpp, $(SRC))
-OUT_RUN := $(subst .cpp,.o,$(SRC_RUN))
+SRC_RUN := $(wildcard *Main.cpp)
 RUN := $(subst .cpp,.exe,$(wildcard *Main.cpp))
 
 SRC_TEST := $(wildcard *Test.cpp)
 TEST := $(subst .cpp,.exe,$(wildcard *Test.cpp))
 
+all: compile checkstyle test clean
+
 compile: $(RUN)
 
-$(RUN):	$(OUT_RUN)
-	$(CC) -g -o $@ $?
+$(RUN):	$(SRC_RUN)
+	$(CC) -o $@ $?
 
 checkstyle:
 	$(STYLECHECKER) $(SRC)
@@ -23,12 +24,9 @@ checkstyle:
 test: $(TEST)
 
 #include also all src to always recompule test when neccesary
-$(TEST): $(SRC_TEST) $(SRC) 
+$(TEST): $(SRC_TEST) $(SRC)
 	$(CC) -o $@ $< $(OPT)
 	./$(TEST)
 
 clean:
 	rm -f $(RUN) $(TEST) $(OUT)
-
-%.o	: %.cpp
-	$(CC) -c $(OPT) $<
