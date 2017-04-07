@@ -10,22 +10,14 @@
 
 // Main function
 int main(int argc, char** argv) {
-
   initScreen();
-
+  positionTetrominosAtTop();
   while (true) {
-    drawTetromino(posX, posY, true);
-    int key = getch();
-    //int posoldX = posX;
-    //int posoldY = posY;
-    moveTetromino(key);
-    if (key == 'q') { break; }
-    //if(posoldX != posX | posoldY != posY){
-      //drawtetromino(posoldx, posoldy, false);
-      //drawTetromino(posX, posY, true);
-      //usleep(1000);
-      //refresh();
-    //}
+    if (timeStep(1000) == 1) {break;}
+    if (atFloor()) {
+      drawTetrominoAtFloor();
+      positionTetrominosAtTop();
+    }
   }
   endwin();
 }

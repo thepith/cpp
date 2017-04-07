@@ -17,16 +17,35 @@ extern int canvasHeight;
 extern int canvasOrgX;
 extern int canvasOrgY;
 
-// Calculate the Pentacost date according to the gauss formula.
-// see https://de.wikipedia.org/wiki/Gau%C3%9Fsche_Osterformel
-// Returns the number days after the 30.th of April. Takes a year as an input.
-int moveTetromino(int);
+// How far to move down
+extern int downStep;
+
+// Move a Tetromino accoding to key
+void moveTetromino(int);
+
+// position Tetromino at the Top
+void positionTetrominosAtTop();
+
+// Move a Tetromino due to gravity
+void gravityTetromino();
+
+// check if Tetromino is at floor
+bool atFloor();
+
+// Perform one step
+int timeStep(int);
+
+// Handle the Floor
+int handleFloor();
 
 // Initializes the Screen
 void initScreen();
 
 // Draws a Tetromino at a given position
 void drawTetromino(int, int, bool);
+
+// Draws a floored Tetromino at a given position
+void drawTetrominoAtFloor();
 
 // Draws a T Tetromino at a given position
 void drawTetrominoT(int, int, bool);
