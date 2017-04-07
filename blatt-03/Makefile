@@ -1,7 +1,7 @@
 CC=g++
 STYLECHECKER=python ../cpplint.py --root=.
 OPTTEST=-lgtest -lpthread -lgtest_main
-OPT=
+OPT=-lncurses
 
 .PRECIOUS: %.o
 
@@ -13,6 +13,8 @@ TEST := $(subst .cpp,.exe,$(wildcard *Test.cpp))
 
 all: compile checkstyle test
 
+run: compile
+	./$(RUN)
 compile: $(RUN)
 
 checkstyle:
