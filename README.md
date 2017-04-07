@@ -11,4 +11,4 @@ Note that it might be necessary to adapt the `GCCLIB` variable.
 ## Vorlesungsnotizen
 * [1. Vorlesung](lectures/l1.md)
 * [2. Vorlesung](lectures/l2.md)
-* [3. Vorlesung](lectures/l2.md)
+* [3. Vorlesung](lectures/l3.md)
