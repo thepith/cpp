@@ -12,3 +12,4 @@ Note that it might be necessary to adapt the `GCCLIB` variable.
 * [1. Vorlesung](lectures/l1.md)
 * [2. Vorlesung](lectures/l2.md)
 * [3. Vorlesung](lectures/l3.md)
+* [4. Vorlesung](lectures/l4.md)
