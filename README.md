@@ -6,7 +6,7 @@ To build the needed `cpplint` stylechecker and the `gtest` test suite run
 ```
 make
 ```
-Note that it might be necessary to adapt the `GCCLIB` variable.
+Note that it might be necessary to adapt the `GCCLIB` variable. To download all files use need `git-svn`
 
 ## Vorlesungsnotizen
 * [1. Vorlesung](lectures/l1.md)

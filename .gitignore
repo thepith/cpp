@@ -33,3 +33,6 @@ cpplint.py
 
 # vim files
 *.swp
+
+#lecture_files
+lecture_files/

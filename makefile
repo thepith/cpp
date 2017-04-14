@@ -9,6 +9,15 @@
 #gcc under cygwin uses usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/
 GCCLIB=/usr/lib/gcc/x86_64-pc-cygwin/5.4.0/include/
 
+##variables
+lecture_dir:=lecture_files/
+movie_dir:=$(lecture_dir)videos/
+movies:=$(shell for n in `seq -w 1 12`; do echo "vorlesung-$$n.mp4" ;done)
+movie_files=$(addprefix $(movie_dir),$(movies))
+
+##ALL
+all: depend lecture
+
 ##DEPENDECIES
 #build the files the exercises need
 depend:	gtest cpplint
@@ -34,6 +43,25 @@ googletest/googletest/CMakeLists.txt:
 
 ##CPPLINT
 cpplint: cpplint.py
+
+lecture: videos svndata
+
+videos: $(movie_files)
+
+%.mp4:  $(movie_dir)
+	wget -nc --no-use-server-timestamps http://ad-teaching.informatik.uni-freiburg.de/ProgrammierenCplusplusSS2016/$(notdir $@) -O $@
+
+%/:
+	mkdir -p $@
+
+svndata: $(lecture_dir)svn-public
+
+$(lecture_dir)public: $(lecture_dir)
+	cd $(lecture_dir); git svn clone https://daphne.informatik.uni-freiburg.de/ss2016/ProgrammierenCplusplus/svn-public/public; rm -rf public/.git
+
+
+code: $(code_dir)
+	wget -P $< -r --no-parent -A 'vorlesung*/*/*' https://daphne.informatik.uni-freiburg.de/ss2016/ProgrammierenCplusplus/svn-public/public/code/
 
 cpplint.py: styleguide/cpplint/cpplint.py
 	ln -s $< $@
