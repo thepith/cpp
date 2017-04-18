@@ -1,7 +1,7 @@
 CC=g++
 STYLECHECKER=python ../cpplint.py --root=.
 OPTTEST=-lgtest -lpthread -lgtest_main
-OPT=-lncurses
+OPT=-lncurses -g
 
 .PRECIOUS: %.o
 
@@ -27,7 +27,7 @@ clean:
 	rm -f *.exe *.o
 
 %.o: %.cpp $(HEAD)
-	$(CC) -o $@ -c $<
+	$(CC) -o $@ -c $< $(OPT)
 
 %Main.exe: %Main.o $(OBJ)
 	$(CC) -o $@ $^ $(OPT)

@@ -23,7 +23,7 @@ TEST(TetrominoTest, MoveTetromino) {
   posX = 11;
   posY = 4;
   moveTetromino(KEY_RIGHT);
-  ASSERT_EQ(11, posX);
+  ASSERT_EQ(12, posX);
   ASSERT_EQ(4, posY);
   posX = 4;
   posY = 4;
@@ -55,11 +55,11 @@ TEST(TetrominoTest, gravityTetromino) {
 
 TEST(TetrominoTest, atFloor) {
   posX = 4;
-  posY = 23;
+  posY = 22;
   int test = atFloor();
   ASSERT_EQ(0, test);
   posX = 4;
-  posY = 22;
+  posY = 21;
   test = atFloor();
   ASSERT_EQ(1, test);
 }
