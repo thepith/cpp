@@ -1,7 +1,7 @@
 CC=g++
 STYLECHECKER=python ../cpplint.py --root=.
 OPTTEST=-lgtest -lpthread -lgtest_main
-OPT=-lncurses -g
+OPT=-lncurses
 
 .PRECIOUS: %.o
 

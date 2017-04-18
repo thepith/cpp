@@ -1,7 +1,7 @@
 // Copyright 2017, Pascal Hebbeker
 
-#ifndef BLATT_03_TETROMINOS_H_
-#define BLATT_03_TETROMINOS_H_
+#ifndef BLATT_04_TETROMINOS_H_
+#define BLATT_04_TETROMINOS_H_
 
 // position of tetrominon
 extern int posX;
@@ -53,4 +53,4 @@ void drawTetrominoAtFloor();
 // Draws a T Tetromino at a given position
 void drawTetrominoT(int, int, int);
 
-#endif  // BLATT_03_TETROMINOS_H_
+#endif  // BLATT_04_TETROMINOS_H_

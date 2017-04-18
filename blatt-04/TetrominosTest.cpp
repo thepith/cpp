@@ -23,12 +23,12 @@ TEST(TetrominoTest, MoveTetromino) {
   posX = 11;
   posY = 4;
   moveTetromino(KEY_RIGHT);
-  ASSERT_EQ(12, posX);
+  ASSERT_EQ(11, posX);
   ASSERT_EQ(4, posY);
   posX = 4;
   posY = 4;
   moveTetromino(KEY_LEFT);
-  ASSERT_EQ(4, posX);
+  ASSERT_EQ(3, posX);
   ASSERT_EQ(4, posY);
   posX = 4;
   posY = 23;
@@ -41,8 +41,8 @@ TEST(TetrominoTest, positionTetrominosAtTop) {
   posX = 0;
   posY = 0;
   positionTetrominosAtTop();
-  ASSERT_EQ(posX, canvasOrgX + canvasWidth/2 - tetrominoWidth/2);
-  ASSERT_EQ(posY, canvasOrgY);
+  ASSERT_EQ(posX, canvasWidth/2 - tetrominoWidth/2);
+  ASSERT_EQ(posY, 0);
 }
 
 TEST(TetrominoTest, gravityTetromino) {
@@ -55,11 +55,11 @@ TEST(TetrominoTest, gravityTetromino) {
 
 TEST(TetrominoTest, atFloor) {
   posX = 4;
-  posY = 22;
+  posY = 16;
   int test = atFloor();
   ASSERT_EQ(0, test);
   posX = 4;
-  posY = 21;
+  posY = 18;
   test = atFloor();
   ASSERT_EQ(1, test);
 }

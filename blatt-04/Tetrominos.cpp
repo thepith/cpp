@@ -27,15 +27,15 @@ int posX = canvasWidth/2 - tetrominoWidth/2;
 int posY = 0;
 
 // _____________________________________________________________________________
-bool overlap(int x, int y){
+bool overlap(int x, int y) {
   for (int i = 0; i < 4; i++) {
     int posXrel = x + txr[i];
     int posYrel = y + tyr[i];
-    if( (posXrel < 0) || (posYrel < 0)
-        || (posXrel >= canvasWidth) || (posYrel >= canvasHeight) ){
+    if ( (posXrel < 0) || (posYrel < 0)
+        || (posXrel >= canvasWidth) || (posYrel >= canvasHeight) ) {
       return true;
     }
-    if(structure[posXrel][posYrel]){
+    if (structure[posXrel][posYrel]) {
       return true;
     }
   }
@@ -46,21 +46,21 @@ bool overlap(int x, int y){
 void moveTetromino(int key) {
   switch (key) {
     case KEY_LEFT:
-      if(! overlap(posX - 1, posY)){
+      if (!overlap(posX - 1, posY)) {
         drawTetromino(posX, posY, 0);
         posX = posX-1;
         drawTetromino(posX, posY, 1);
       }
       break;
     case KEY_RIGHT:
-      if(! overlap(posX + 1, posY)){
+      if (!overlap(posX + 1, posY)) {
         drawTetromino(posX, posY, 0);
         posX = posX+1;
         drawTetromino(posX, posY, 1);
       }
       break;
     case KEY_DOWN:
-      if(! overlap(posX, posY + 1)){
+      if (!overlap(posX, posY + 1)) {
         drawTetromino(posX, posY, 0);
         posY = posY+1;
         drawTetromino(posX, posY, 1);
@@ -69,7 +69,7 @@ void moveTetromino(int key) {
     case KEY_UP:
       drawTetromino(posX, posY, 0);
       rotateTetromino();
-      if(overlap(posX, posY)){
+      if (overlap(posX, posY)) {
         rotateTetromino();
         rotateTetromino();
         rotateTetromino();
@@ -126,7 +126,7 @@ int positionTetrominosAtTop() {
   adjustRelativeCoordinates();
   posX = canvasWidth/2 - tetrominoWidth/2;
   posY = 0;
-  if(atFloor()){
+  if (atFloor()) {
     drawTetromino(posX, posY, 1);
     printf("GAME OVER");
     fflush(stdout);
@@ -151,7 +151,7 @@ void rotateTetromino() {
 
 // _____________________________________________________________________________
 void gravityTetromino() {
-  if(! overlap(posX, posY + 1)){
+  if (!overlap(posX, posY + 1)) {
     drawTetromino(posX, posY, 0);
     posY++;
     drawTetromino(posX, posY, 1);
@@ -167,35 +167,53 @@ bool atFloor() {
     floored = true;
   } else {
     for (int i = 0; i < 4; i++) {
-      if(structure[posXrel+txr[i]][posYrel + tyr[i] + 1]){
+      if (structure[posXrel+txr[i]][posYrel + tyr[i] + 1]) {
         floored = true;
         break;
       }
     }
   }
-  if(floored){
+  if (floored) {
     for (int i = 0; i < 4; i++) {
       structure[posXrel+txr[i]][posYrel + tyr[i]] = true;
     }
   }
-  for (int ix = 0; ix < canvasWidth; ix++) {
-    for (int iy = 0; iy < canvasHeight; iy++) {
-      mvprintw(canvasOrgY + iy,
-          2*canvasOrgX + canvasWidth + ix, "%d", structure[ix][iy]);
-    }
-  }
   return floored;
-
 }
 
 // _____________________________________________________________________________
 void checkLines(int iline) {
   int nblock = 0;
-  for(int x = 0; x < canvasWidth; x++){
-    if(structure[x][iline]){
+  for (int x = 0; x < canvasWidth; x++) {
+    if (structure[x][iline]) {
       nblock++;
     }
   }
+  // line is full
+  if (nblock == canvasWidth) {
+    init_pair(1, COLOR_GREEN, COLOR_BLACK);
+    init_pair(2, COLOR_BLACK, COLOR_GREEN);
+    init_pair(3, COLOR_BLACK, COLOR_RED);
+    init_pair(4, COLOR_BLACK, COLOR_RED);
+    // shift structure
+    for (int x = 0; x < canvasWidth; x++) {
+      for (int jline = iline; jline >= 0; jline--) {
+        switch (jline) {
+          case 0:
+            structure[x][jline] = false; break;
+          default:
+            structure[x][jline] = structure[x][jline-1];
+        }
+        if (structure[x][jline]) {
+          attron(COLOR_PAIR(3));
+        } else {
+          attron(COLOR_PAIR(1));
+        }
+        mvprintw(canvasOrgY + jline, canvasOrgX + x, " ");
+      }
+    }
+  }
+  fflush(stdout);
 }
 
 // _____________________________________________________________________________
@@ -211,15 +229,18 @@ int timeStep(int duration) {
   }
   if (atFloor()) {
     drawTetrominoAtFloor();
-    for(int relativeLine = 0; relativeLine <= tetrominoHeight; relativeLine++){
+    for (int relativeLine = 0;
+        relativeLine <= tetrominoHeight;
+        relativeLine++) {
       checkLines(relativeLine + posY);
     }
     int playing = positionTetrominosAtTop();
-    if(playing != 0){
+    if (playing != 0) {
       return 1;
     }
+  } else {
+    gravityTetromino();
   }
-  gravityTetromino();
   return 0;
 }
 
@@ -236,23 +257,20 @@ void initScreen() {
   // draw border
   for (int ix = 0; ix <= canvasWidth + 1; ix++) {
     for (int iy = 0; iy <= canvasHeight + 1; iy++) {
-      if( (ix == 0) ||
+      if ( (ix == 0) ||
           (iy == 0) ||
           (ix == canvasWidth + 1) ||
-          (iy == canvasHeight + 1)){
-        mvprintw(canvasOrgY+iy - 1, canvasOrgX + ix - 1, "0");
+          (iy == canvasHeight + 1)) {
+        mvprintw(canvasOrgY+iy - 1, canvasOrgX + ix - 1, "#");
       }
     }
   }
   fflush(stdout);
-  for(int x = 0; x<canvasWidth; x++)
-  {
-    for(int y = 0; y<canvasHeight; y++)
-    {
+  for (int x = 0; x < canvasWidth; x++) {
+    for (int y = 0; y < canvasHeight; y++) {
       structure[x][y] = false;
     }
   }
-
 }
 
 // _____________________________________________________________________________
@@ -262,21 +280,13 @@ void drawTetromino(int drawX, int drawY, int draw) {
 
 // _____________________________________________________________________________
 void drawTetrominoT(int drawX, int drawY, int mode) {
-  //printf("\x1b[7m");
   init_pair(1, COLOR_GREEN, COLOR_BLACK);
   init_pair(2, COLOR_BLACK, COLOR_GREEN);
   init_pair(3, COLOR_BLACK, COLOR_RED);
-  //init_pair(2, COLOR_BLACK, COLOR_RED);
   attron(COLOR_PAIR(mode + 1));
   for (int i = 0; i < 4; i++) {
     mvprintw(canvasOrgY + drawY + tyr[i],
         canvasOrgX + drawX + txr[i], " ", mode);
-  }
-  for (int i = 0; i < 4; i++) {
-    mvprintw(canvasOrgY + posY + tyr[i],
-       2*canvasOrgX + canvasWidth + posX + txr[i], "X");
-    mvprintw(canvasOrgY, 3*canvasOrgX + 2*canvasWidth,
-       "%02d, %02d", posX, posY);
   }
   // refresh() seems not to work with cygwin under windows?
   fflush(stdout);
