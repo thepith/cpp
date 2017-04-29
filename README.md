@@ -13,3 +13,4 @@ Note that it might be necessary to adapt the `GCCLIB` variable. To download all 
 * [2. Vorlesung](lectures/l2.md)
 * [3. Vorlesung](lectures/l3.md)
 * [4. Vorlesung](lectures/l4.md)
+* [5. Vorlesung](lectures/l5.md)
