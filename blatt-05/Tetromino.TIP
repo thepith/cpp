@@ -1,0 +1,38 @@
+// Copyright 2016, University of Freiburg,
+// Chair of Algorithms and Data Structures.
+// Author: Hannah Bast <bast@cs.uni-freiburg.de>,
+//         Axel Lehmann <lehmanna@cs.uni-freiburg.de>.
+
+// NOTE: this is a code design suggestion in pseudo-code. It is not supposed to
+// be compilable in any language. You have to translate it to C++ yourself. The
+// purpose of this file is to suggest a basic design and settle questions you
+// might have on what exactly your code is supossed to do.
+
+// Class for the tetromino.
+class Tetromino {
+ public:
+  // Initialise a new tetromino for given type.
+  // NOTE: just call using (lrand48() % 7).
+  void set(int n);
+
+  // Move the tetromino according to the given key.
+  void move(int key, bool reverse);
+
+  // Draw the current tetromino (not in red).
+  void show();
+
+ private:
+  // Rotate the tetromino by the given multiple of 90 degrees to the right.
+  void rotate(int n);
+
+  // Absolute position of the Tetromino.
+  int _x;
+  int _y;
+
+  // Relative positions of the four parts of the Tetromino.
+  int _xr[4];
+  int _yr[4];
+
+  // All 7 Tetrominos in default rotation.
+  static int _tetrominoStructures[7][4][2];
+};
