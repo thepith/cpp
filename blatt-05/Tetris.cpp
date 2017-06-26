@@ -6,20 +6,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ncurses.h>
-#include "./Tetris.h"
-
-int sx = 3;
-int sy = 2;
-
-// _____________________________________________________________________________
-int tx = 5;
-int ty = 19;
-
-int txr[4] = { -1, 0, 1, 1 };
-int tyr[4] = { -1, -1, -1, 0 };
+#include "../blatt-05/Tetris.h"
+#include "../blatt-05/Tetromino.h"
+#include "../blatt-05/Structure.h"
 
 // _____________________________________________________________________________
-void initTerminal() {
+void Tetris::initTerminal() {
   initscr();
   cbreak();
   noecho();
@@ -31,42 +23,46 @@ void initTerminal() {
   init_pair(1, COLOR_RED, COLOR_RED);
 }
 
-// _____________________________________________________________________________
-void moveTetromino(int key, bool reverse) {
-  switch (key) {
-    case KEY_UP:
-      if (reverse == false) rotateTetromino(1);
-      if (reverse == true) rotateTetromino(3);
-      break;
-    case KEY_DOWN:
-      if (reverse == false) ty--;
-      if (reverse == true) ty++;
-      break;
-    case KEY_RIGHT:
-      if (reverse == false) tx++;
-      if (reverse == true) tx--;
-      break;
-    case KEY_LEFT:
-      if (reverse == false) tx--;
-      if (reverse == true) tx++;
-      break;
-  }
-}
-
-// _____________________________________________________________________________
-void rotateTetromino(int n) {
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < 4; j++) {
-      int xr = tyr[j];
-      int yr = -txr[j];
-      txr[j] = xr;
-      tyr[j] = yr;
+void Tetris::play() {
+  Structure structure;
+  tetromino tetromino;
+  //set a new tetromino
+  tetromino.set(0);
+  while (true) {
+    // Get user input and fall every 50th iteration.
+    key = getch();
+    if (++count % 50 == 0) { key = KEY_DOWN; }
+    // Check if tetromino is touching the structure (or the bottom) by
+    // temporarily moving it one down and checking for a collision.
+    tetromino.move(KEY_DOWN, false);
+    collided = structure.checkCollision(tetromino);
+    tetromino.move(KEY_DOWN, true);
+    if (collided) {
+      // When bottom is reached, start again at the top.
+      structure.addTetromino(tetromino);
+      structure.removeFullRows();
+      tetromino.set(0);
+      // Check if game is lost.
+      if (structure.checkCollision() == true) {
+        break;
+      }
     }
+    // Move tetromino.
+    moveTetromino(key, false);
+    if (structure.checkCollision() == true) {
+      moveTetromino(key, true);
+    }
+    // Draw current structure and tetromino.
+    structure.show();
+    tetromino.show();
+    refresh();
+    // Wait for 10 milliseconds.
+    usleep(10 * 1000);
   }
 }
 
 // _____________________________________________________________________________
-void showCell(int x, int y, int attr) {
+void Tetris::showCell(int x, int y, int attr) {
   attron(attr);
   for (int i = 0; i < sx; i++) {
     for (int j = 0; j < sy; j++) {
@@ -74,11 +70,4 @@ void showCell(int x, int y, int attr) {
     }
   }
   attroff(attr);
-}
-
-// _____________________________________________________________________________
-void showTetromino() {
-  for (int k = 0; k < 4; k++) {
-    showCell(tx + txr[k], ty + tyr[k], A_REVERSE);
-  }
 }

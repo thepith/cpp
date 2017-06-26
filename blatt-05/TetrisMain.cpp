@@ -11,7 +11,8 @@
 #include "./Structure.h"
 
 int main(int argc, char** argv) {
-  initTerminal();
+  Tetris tetris;
+  tetris.initTerminal;
   showTetromino();
   refresh();
   int count = 0;

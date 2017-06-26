@@ -2,8 +2,8 @@
 // Chair of Algorithms and Data Structures.
 // Author: Hannah Bast <bast@cs.uni-freiburg.de>.
 
-#ifndef VORLESUNG_05_STRUCTURE_H_
-#define VORLESUNG_05_STRUCTURE_H_
+#ifndef BLATT_05_STRUCTURE_H_
+#define BLATT_05_STRUCTURE_H_
 
 #include <gtest/gtest.h>
 
@@ -35,4 +35,4 @@ class Structure {
   FRIEND_TEST(StructureTest, removeFullRows);
 };
 
-#endif  // VORLESUNG_05_STRUCTURE_H_
+#endif  // BLATT_05_STRUCTURE_H_

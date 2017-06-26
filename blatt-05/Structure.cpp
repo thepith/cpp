@@ -1,10 +1,10 @@
-// Copyright 2016, University of Freiburg,
-// Chair of Algorithms and Data Structures.
-// Author: Hannah Bast <bast@cs.uni-freiburg.de>.
+// Copyright 2017, Pascal Hebbeker
+
 
 #include <ncurses.h>
-#include "./Tetris.h"
-#include "./Structure.h"
+#include "../blatt-05/Tetris.h"
+#include "../blatt-05/Structure.h"
+
 
 // _____________________________________________________________________________
 Structure::Structure() {
@@ -66,9 +66,10 @@ void Structure::removeFullRows() {
 
 // _____________________________________________________________________________
 void Structure::show() {
+  Tetris tetris;
   for (int x = 0; x < 10; x++) {
     for (int y = 0; y < 20; y++) {
-      showCell(x, y, _cells[x][y] ? COLOR_PAIR(1) : A_NORMAL);
+      tetris.showCell(x, y, _cells[x][y] ? COLOR_PAIR(1) : A_NORMAL);
     }
   }
 }
